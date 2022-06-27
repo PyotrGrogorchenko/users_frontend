@@ -1,0 +1,31 @@
+{
+    "parserOptions": {
+        "project": "./tsconfig.eslint.json"
+    },    
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript",        
+        "google"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "comma-dangle": ["error", "never"],
+        "semi": ["error", "never"],
+        "react/react-in-jsx-scope": "off",
+        "object-curly-spacing": ["error", "always", { "arraysInObjects": false, "objectsInObjects": false }],
+        "max-len": ["error", { "code": 150 }],
+        "require-jsdoc": "off"
+    }
+}
