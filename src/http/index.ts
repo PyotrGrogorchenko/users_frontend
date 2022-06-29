@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { AuthResponse } from '../models/responses/AuthResponse'
 
 export const API_URL = 'http://localhost:3000/api'
 
@@ -14,3 +15,20 @@ http.interceptors.request.use((config) => {
   config.headers.Autorization = `Bearer ${localStorage.getItem('token')}`
   return config
 })
+
+http.interceptors.response.use((config) => {
+  return config
+}, (async (err) => {
+  const originalRequest = err.config
+  if (err.response.status === 401 && err.config && !err.config._isRetry) {
+    try {
+      originalRequest._isRetry = true
+      const res = await axios.get<AuthResponse>(`${API_URL}/users/refresh`, { withCredentials: true })
+      localStorage.setItem('token', res.data.accessToken)
+      return http.request(originalRequest)
+    } catch (e) {
+      console.error('Не авторизован')
+    }
+  }
+  throw err
+}))

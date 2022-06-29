@@ -1,22 +1,40 @@
 import { observer } from 'mobx-react-lite'
-import { useContext, useEffect } from 'react'
-import { Context } from '.'
-import { LoginForm } from './components/LoginForm'
+// import { useEffect } from 'react'
+// import { Router } from './components/Router'
+// import { LoginForm } from './components/LoginForm'
+// import { useStore } from './components/prividers/StoreProvider'
+// import { User } from './models/User'
+// import { userService } from './services/userService'
 
 const AppFC = () => {
-  const { store } = useContext(Context)
+  // const [users, setUsers] = useState<User[]>([])
+  // const { store } = useStore()
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      store.checkAuth()
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (localStorage.getItem('token')) {
+  //     store.checkAuth()
+  //   }
+  // }, [])
+
+  // // const getUsesrs = async () => {
+  // //   try {
+  // //     const res = await userService.fetchUsers()
+  // //     setUsers(res.data)
+  // //   } catch (e) {
+  // //     store.setError(e as Error, 'error')
+  // //   }
+  // // }
+
+  // if (store.isLoading) {
+  //   return <div>Загрузка...</div>
+  // }
+
+  // if (!store.isAuth) {
+  //   return <LoginForm/>
+  // }
 
   return (
-    <div>
-      <h1>{ store.isAuth ? `Авторизован ${store.user.email}` : 'Автоизуйтесь'}</h1>
-      <LoginForm/>
-    </div>
+    <h1>APP</h1>
   )
 }
 

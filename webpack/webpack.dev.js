@@ -7,7 +7,8 @@ module.exports = {
   devServer: {
     hot: true,
     open: false,
-    port: 4000
+    port: 4000,
+    historyApiFallback: true
   },
   plugins: [
     new ReactRefreshWebpackPlugin(),

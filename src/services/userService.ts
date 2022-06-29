@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 import { http } from '../http'
-import { User } from '../models/responses/User'
+import { User } from '../models/User'
 
 export const userService = {
   fetchUsers: async (): Promise<AxiosResponse<User[]>> => {

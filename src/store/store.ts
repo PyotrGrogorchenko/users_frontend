@@ -1,13 +1,16 @@
 import axios from 'axios'
 import { makeAutoObservable } from 'mobx'
+import { StoreError, TypeError } from '../exceptions/StoreError'
 import { API_URL } from '../http'
 import { AuthResponse } from '../models/responses/AuthResponse'
-import { User } from '../models/responses/User'
+import { User, UserLogin, UserRegistration } from '../models/User'
 import { authService } from '../services/authService'
 
 export class Store {
   user = <User>{}
   isAuth = false
+  isLoading = false
+  errors: { err: StoreError, type: TypeError} [] = []
 
   constructor() {
     makeAutoObservable(this)
@@ -21,27 +24,35 @@ export class Store {
     this.user = user
   }
 
-  async login(email: string, password: string) {
+  setLoading(isLoading: boolean) {
+    this.isLoading = isLoading
+  }
+
+  setError(e: Error, type: TypeError = 'info') {
+    this.errors.push({ err: new StoreError(e as Error), type })
+  }
+
+  async login(data: UserLogin) {
     try {
-      const res = await authService.login(email, password)
+      const res = await authService.login(data)
       console.log(res)
       localStorage.setItem('token', res.data.accessToken)
       this.setAuth(true)
       this.setUser(res.data.user)
     } catch (e) {
-      console.log(e)
+      this.setError(new StoreError(e as Error), 'error')
     }
   }
 
-  async registration(email: string, password: string) {
+  async registration(data: UserRegistration) {
     try {
-      const res = await authService.registration(email, password)
+      const res = await authService.registration(data)
       console.log(res)
       localStorage.setItem('token', res.data.accessToken)
       this.setAuth(true)
       this.setUser(res.data.user)
     } catch (e) {
-      console.log(e)
+      this.setError(new StoreError(e as Error), 'error')
     }
   }
 
@@ -52,19 +63,22 @@ export class Store {
       this.setAuth(false)
       this.setUser(<User>{})
     } catch (e) {
-      console.log(e)
+      this.setError(new StoreError(e as Error), 'error')
     }
   }
 
   async checkAuth() {
+    this.setLoading(true)
     try {
-      const res = await axios.get<AuthResponse>(`${API_URL}/refresh`, { withCredentials: true })
+      const res = await axios.get<AuthResponse>(`${API_URL}/users/refresh`, { withCredentials: true })
       console.log(res)
       localStorage.setItem('token', res.data.accessToken)
       this.setAuth(true)
       this.setUser(res.data.user)
     } catch (e) {
-      console.log(e)
+      this.setError(new StoreError(e as Error), 'error')
+    } finally {
+      this.setLoading(false)
     }
   }
 }
