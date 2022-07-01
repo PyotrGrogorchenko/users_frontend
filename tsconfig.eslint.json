@@ -3,6 +3,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.js",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "typings/**/*.ts"
   ]
 }

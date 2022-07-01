@@ -1,18 +1,10 @@
-import { observer } from 'mobx-react-lite'
+import { AccountForm } from '@src/components/forms/AccountForm'
 import { FC } from 'react'
-// import { useStore } from '../components/prividers/StoreProvider'
 
-const AccountFC: FC = () => {
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
-
-  // const { store } = useStore()
-
+export const Account: FC = () => {
   return (
-    <div>
-      <h1>Account</h1>
-    </div>
+    <>
+      <AccountForm/>
+    </>
   )
 }
-
-export const Account = observer(AccountFC)

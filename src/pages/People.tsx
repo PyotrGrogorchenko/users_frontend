@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import { FC, useEffect, useState } from 'react'
-import { useStore } from '../components/prividers/StoreProvider'
-import { User } from '../models/User'
-import { userService } from '../services/userService'
+import { useStore } from '@src/components/prividers/StoreProvider'
+import { User } from '@src/models/User'
+import { userService } from '@src/services/userService'
 
 const PeopleFC: FC = () => {
   const [users, setUsers] = useState<User[]>([])

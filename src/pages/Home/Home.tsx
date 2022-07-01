@@ -1,18 +1,15 @@
-import { observer } from 'mobx-react-lite'
 import { FC } from 'react'
-import { LoginForm } from '../../components/forms/LoginForm'
-import { RegistrationForm } from '../../components/forms/RegistrationForm'
+import { LoginForm } from '@src/components/forms/LoginForm'
+import { RegistrationForm } from '@src/components/forms/RegistrationForm'
 import { useHome } from './Provider'
 
-const HomeFC: FC = () => {
-  const { selectMode } = useHome()
+export const Home: FC = () => {
+  const { isLogin } = useHome()
 
   return (
     <>
-      {selectMode() === 'login' && <LoginForm/>}
-      {selectMode() === 'registration' && <RegistrationForm/>}
+      {isLogin() && <LoginForm/>}
+      {!isLogin() && <RegistrationForm/>}
     </>
   )
 }
-
-export const Home = observer(HomeFC)

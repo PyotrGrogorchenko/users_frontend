@@ -1,9 +1,4 @@
-export type ValidationError = {
-  value: string
-  msg: string
-  param: string
-  location: string
-}
+import { ValidationError } from '@src/models/ValidationError'
 
 export type TypeError = 'info' | 'error' | 'warn'
 

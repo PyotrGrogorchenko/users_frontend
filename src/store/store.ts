@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { makeAutoObservable } from 'mobx'
 import { StoreError, TypeError } from '../exceptions/StoreError'
 import { API_URL } from '../http'
@@ -32,28 +32,40 @@ export class Store {
     this.errors.push({ err: new StoreError(e as Error), type })
   }
 
-  async login(data: UserLogin) {
+  async login(data: UserLogin): Promise<AxiosResponse<AuthResponse>> {
     try {
       const res = await authService.login(data)
-      console.log(res)
       localStorage.setItem('token', res.data.accessToken)
       this.setAuth(true)
       this.setUser(res.data.user)
+      return res
     } catch (e) {
-      this.setError(new StoreError(e as Error), 'error')
+      return e as AxiosResponse<AuthResponse>
     }
   }
 
   async registration(data: UserRegistration) {
     try {
       const res = await authService.registration(data)
-      console.log(res)
       localStorage.setItem('token', res.data.accessToken)
       this.setAuth(true)
       this.setUser(res.data.user)
+      return res
     } catch (e) {
-      this.setError(new StoreError(e as Error), 'error')
+      return e
     }
+  }
+
+  async saveAvatar(data: UserRegistration) {
+    // try {
+    //   const res = await authService.registration(data)
+    //   localStorage.setItem('token', res.data.accessToken)
+    //   this.setAuth(true)
+    //   this.setUser(res.data.user)
+    //   return res
+    // } catch (e) {
+    //   return e
+    // }
   }
 
   async logout() {
@@ -68,10 +80,8 @@ export class Store {
   }
 
   async checkAuth() {
-    this.setLoading(true)
     try {
       const res = await axios.get<AuthResponse>(`${API_URL}/users/refresh`, { withCredentials: true })
-      console.log(res)
       localStorage.setItem('token', res.data.accessToken)
       this.setAuth(true)
       this.setUser(res.data.user)

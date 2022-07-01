@@ -1,20 +1,39 @@
+import { ErrorBoundary } from 'react-error-boundary'
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { observer } from 'mobx-react-lite'
-// import { useEffect } from 'react'
-// import { Router } from './components/Router'
-// import { LoginForm } from './components/LoginForm'
-// import { useStore } from './components/prividers/StoreProvider'
-// import { User } from './models/User'
-// import { userService } from './services/userService'
+
+import { ErrorFallback } from '@src/components/ErrorFallback'
+import { StoreProvider, useStore } from '@src/components/prividers/StoreProvider'
+import { Router } from '@src/components/Router'
+import { theme } from '@src/styled/theme'
+import { useEffect } from 'react'
+import { Layout } from './components/Layout'
+import { BrowserRouter } from 'react-router-dom'
+
+// const Wrapper = styled.div`
+//   width: 100%;
+//   min-height: 100vh;
+//   padding: 2rem;
+//   background: white;
+// `
+
+const Global = createGlobalStyle`
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}`
 
 const AppFC = () => {
   // const [users, setUsers] = useState<User[]>([])
-  // const { store } = useStore()
+  const { store } = useStore()
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('token')) {
-  //     store.checkAuth()
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      store.checkAuth()
+    }
+  }, [])
 
   // // const getUsesrs = async () => {
   // //   try {
@@ -34,7 +53,18 @@ const AppFC = () => {
   // }
 
   return (
-    <h1>APP</h1>
+    <ThemeProvider theme={theme}>
+      <Global/>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <StoreProvider>
+          <BrowserRouter>
+            <Layout>
+              <Router/>
+            </Layout>
+          </BrowserRouter>
+        </StoreProvider>
+      </ErrorBoundary>
+    </ThemeProvider>
   )
 }
 

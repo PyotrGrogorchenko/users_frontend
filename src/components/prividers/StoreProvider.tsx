@@ -1,5 +1,5 @@
 import { FC, ReactNode, useContext, createContext } from 'react'
-import { Store } from '../../store/store'
+import { Store } from '@src/store'
 
 const store = new Store()
 const Context = createContext({ store })

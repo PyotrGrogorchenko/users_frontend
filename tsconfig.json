@@ -5,6 +5,11 @@
       "DOM",
       "ESNext"
     ],
+    "typeRoots": [
+      "typings/**/*.d.ts",
+      "node_modules/@types"
+    ],
+    "baseUrl": "./",
     "jsx": "react-jsx",
     "module": "CommonJS",
     "noEmit": true,
@@ -12,6 +17,9 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@src/*": ["src/*"]
+    }    
   }
 }

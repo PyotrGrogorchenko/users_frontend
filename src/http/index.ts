@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AuthResponse } from '../models/responses/AuthResponse'
+import { AuthResponse } from '@src/models/responses/AuthResponse'
 
 export const API_URL = 'http://localhost:3000/api'
 

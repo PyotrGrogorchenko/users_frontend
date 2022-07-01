@@ -4,7 +4,7 @@ type Mode = 'login' | 'registration'
 
 type Context = {
   putMode: (mode: Mode) => void
-  selectMode: () => Mode
+  isLogin: () => boolean
 }
 
 const Context = createContext<Partial<Context>>({})
@@ -14,10 +14,10 @@ export const HomeProvider: FC<{children: ReactNode}> = (props) => {
   const [mode, setMode] = useState<Mode>('login')
 
   const putMode = (m: Mode) => setMode(m)
-  const selectMode = () => mode
+  const isLogin = () => mode === 'login'
 
   return (
-    <Context.Provider value={{ putMode, selectMode } as Context}>
+    <Context.Provider value={{ putMode, isLogin } as Context}>
       {props.children}
     </Context.Provider>
   )

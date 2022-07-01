@@ -14,7 +14,14 @@
         "plugin:import/warnings",
         "plugin:import/typescript",        
         "google"
-    ],
+    ],  
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          }
+        }
+    },
     "parser": "@typescript-eslint/parser",
     "plugins": [
         "react",
@@ -26,6 +33,7 @@
         "react/react-in-jsx-scope": "off",
         "object-curly-spacing": ["error", "always", { "arraysInObjects": false, "objectsInObjects": false }],
         "max-len": ["error", { "code": 150 }],
-        "require-jsdoc": "off"
+        "require-jsdoc": "off",
+        "import/no-unresolved": "off"
     }
 }
