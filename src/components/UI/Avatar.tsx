@@ -12,13 +12,6 @@ export const Container = styled.div(() => `
   margin: 0 auto;
 `)
 
-export type AvatarMethods = {
-  seveAvatar: () => void
-}
-export type Props = {
-  ref: React.ForwardedRef<AvatarMethods>
-}
-
 export const AvatarImg = styled.img(() => {
   return `
     height: 200px;
@@ -47,6 +40,14 @@ export const AvatarPlug = styled.div((props) => {
   `
 })
 
+export type AvatarMethods = {
+  save: () => void
+}
+
+type Props = {
+  ref: React.ForwardedRef<AvatarMethods>
+}
+
 export const Avatar: FC<Props> = forwardRef((_, ref) => {
   const refAvatar = useRef(null)
   const [srcAvatar, setSrcAvatar] = useState('')
@@ -69,16 +70,17 @@ export const Avatar: FC<Props> = forwardRef((_, ref) => {
     reader.readAsDataURL(file)
   }, [])
 
-  const seveAvatar = useCallback(() => {
+  const save = useCallback(async () => {
     const input = refAvatar.current as unknown as HTMLInputElement
     if (!input.files || !input.files.length) return
-    imageService.save(input.files[0])
-    // console.log('seveAvatar', input.files[0])
+    const file = input.files[0]
+    const res = await imageService.upload(file, 'avatar')
+    console.log('res', res)
   }, [])
 
   useImperativeHandle(ref, () => ({
-    seveAvatar
-  }), [seveAvatar])
+    save
+  }), [save])
 
   return (
     <Container>

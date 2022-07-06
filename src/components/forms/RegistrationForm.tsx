@@ -4,17 +4,17 @@ import { useStore } from '@src/components/prividers/StoreProvider'
 import { Button } from '@src/components/UI/Button'
 import { formField as field } from '@src/components/forms/Form/reducer'
 import { Form } from '@src/components/forms/Form'
-import { Avatar, AvatarMethods } from '@src/components/UI/Avatar'
+import { AvatarMethods, Avatar } from '@src/components/UI/Avatar'
 
 export const RegistrationForm: FC = () => {
   const { putMode } = useHome()
   const { store } = useStore()
-
   const AvatarRef = useRef() as RefObject<AvatarMethods>
 
   const cb = useCallback((ok: boolean) => {
-    // if (!ok) return
-    AvatarRef.current?.seveAvatar()
+    if (ok) {
+      AvatarRef.current?.save()
+    }
   }, [])
 
   return (
@@ -23,15 +23,15 @@ export const RegistrationForm: FC = () => {
       <Form
         initialState={{
           fields: {
-            username: { ...field, view: 'Имя' },
-            email: { ...field, view: 'Email', type: 'email' },
-            password: { ...field, view: 'Пароль' },
-            dateBirth: { ...field, view: 'Дата рождения: ', type: 'date' },
-            gender: { ...field }
+            username: { ...field, label: 'Имя' },
+            email: { ...field, label: 'Email', type: 'email' },
+            password: { ...field, label: 'Пароль' },
+            dateBirth: { ...field, label: 'Дата рождения: ', type: 'date' },
+            gender: { ...field, value: 'male' }
           }
         }}
         submit={{
-          view: 'Регистрация',
+          label: 'Зарегистрироваться',
           action: store.registration.bind(store),
           cb
         }}

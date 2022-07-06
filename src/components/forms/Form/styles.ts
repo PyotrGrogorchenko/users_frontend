@@ -4,9 +4,17 @@ export const Container = styled.div(() => `
   display: grid;
   grid-template-areas: 'data' 'buttons';
   grid-template-columns: 300px;
-  grid-template-rows: 300px;
+  padding: 20px 0px;
+  grid-gap: 20px;
   justify-content: center;
 `)
+
+// export const AvatarContainer = styled.div(() => `
+//   grid-area: avatar;
+//   align-self: center;
+//   display: grid;
+//   grid-gap: 20px;
+// `)
 
 export const Data = styled.div(() => `
   grid-area: data;

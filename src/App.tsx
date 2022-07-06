@@ -1,5 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary'
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { observer } from 'mobx-react-lite'
 
 import { ErrorFallback } from '@src/components/ErrorFallback'
@@ -26,7 +26,6 @@ const Global = createGlobalStyle`
 }`
 
 const AppFC = () => {
-  // const [users, setUsers] = useState<User[]>([])
   const { store } = useStore()
 
   useEffect(() => {
@@ -34,23 +33,6 @@ const AppFC = () => {
       store.checkAuth()
     }
   }, [])
-
-  // // const getUsesrs = async () => {
-  // //   try {
-  // //     const res = await userService.fetchUsers()
-  // //     setUsers(res.data)
-  // //   } catch (e) {
-  // //     store.setError(e as Error, 'error')
-  // //   }
-  // // }
-
-  // if (store.isLoading) {
-  //   return <div>Загрузка...</div>
-  // }
-
-  // if (!store.isAuth) {
-  //   return <LoginForm/>
-  // }
 
   return (
     <ThemeProvider theme={theme}>

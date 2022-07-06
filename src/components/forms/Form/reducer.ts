@@ -13,7 +13,7 @@ type ActionSetErrors = {
 type Actions = ActionSetField | ActionSetErrors
 
 export const formField = {
-  view: '',
+  label: '',
   value: '',
   type: 'text' as React.HTMLInputTypeAttribute
 }

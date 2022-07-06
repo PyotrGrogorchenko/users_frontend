@@ -14,15 +14,15 @@ export const LoginForm: FC = () => {
       <Form
         initialState={{
           fields: {
-            email: { ...field, type: 'email', view: 'Email' },
-            password: { ...field, view: 'Пароль' }
+            email: { ...field, type: 'email', label: 'Email' },
+            password: { ...field, label: 'Пароль' }
           }
         }}
         submit={{
-          view: 'Войти',
+          label: 'Войти',
           action: store.login.bind(store)
         }}
-        actions={<Button onClick={() => putMode('registration')}>Регистрация</Button>}
+        actions={<Button onClick={() => putMode('registration')}>Зарегистрироваться</Button>}
       />
     </>
   )

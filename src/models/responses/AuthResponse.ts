@@ -1,8 +1,11 @@
 import { User } from '../User'
-import { HTTPError } from './HTTPError'
+import { ValidationError } from '../ValidationError'
+import { BaseResponse } from './BaseResponse'
 
 export type AuthResponse = {
   accessToken: string
   refreshToken: string
   user: User
-} & HTTPError
+  message?: string
+  errors?: ValidationError[]
+} & BaseResponse

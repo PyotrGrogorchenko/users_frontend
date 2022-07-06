@@ -5,8 +5,8 @@ export type User = {
   password: string
   dateBirth?: string
   gender?: 'male' | 'female'
-  avatar?: string
+  avatar?: File
 }
 
 export type UserLogin = Pick<User, 'email' | 'password'>
-export type UserRegistration = Omit<User, '_id'>
+export type UserRegistration = Omit<User, '_id'| 'avatar'>

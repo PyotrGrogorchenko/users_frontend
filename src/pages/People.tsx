@@ -11,7 +11,6 @@ const PeopleFC: FC = () => {
   useEffect(() => {
     userService.fetchUsers()
         .then((res) => {
-          console.log(res.data)
           setUsers(res.data)
         })
         .catch((e) => store.setError(e as Error, 'error'))
