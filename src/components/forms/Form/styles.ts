@@ -9,13 +9,6 @@ export const Container = styled.div(() => `
   justify-content: center;
 `)
 
-// export const AvatarContainer = styled.div(() => `
-//   grid-area: avatar;
-//   align-self: center;
-//   display: grid;
-//   grid-gap: 20px;
-// `)
-
 export const Data = styled.div(() => `
   grid-area: data;
   align-self: center;

@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  
+  web:
+    container_name: app-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    restart: always
+    environment:
+      NODE_ENV: development
+      HOST: 0.0.0.0
+    volumes:
+      - .:/app
+      - /node_modules
+    working_dir: /app
+    networks:
+      - main
+
+networks:
+  main:
+    driver: bridge   

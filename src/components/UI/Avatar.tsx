@@ -1,9 +1,15 @@
-import { imageService } from '@src/services/imageServiсe'
+import { AxiosResponse } from 'axios'
 import React, {
-  FC, forwardRef, useCallback, useImperativeHandle, useRef, useState
+  FC, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState
 } from 'react'
+import buffer from 'buffer'
 import styled from 'styled-components'
+import { ImageResponse } from '@src/models/responses/ImageResponse'
+import { imageService } from '@src/services/imageServiсe'
 import { Button } from './Button'
+import { Image } from '@src/models/Image'
+
+const Buf = buffer.Buffer
 
 export const Container = styled.div(() => `
   display: flex;
@@ -41,16 +47,26 @@ export const AvatarPlug = styled.div((props) => {
 })
 
 export type AvatarMethods = {
-  save: () => void
+  save: () => Promise<AxiosResponse<ImageResponse> | undefined>
 }
 
 type Props = {
   ref: React.ForwardedRef<AvatarMethods>
+  image?: Image
 }
 
-export const Avatar: FC<Props> = forwardRef((_, ref) => {
+const makeSrcFromBuffer = (image?: Image) => {
+  if (!image) return ''
+  return `data:${image.contentType};base64,${Buf.from(image.data).toString('base64')}`
+}
+
+export const Avatar: FC<Props> = forwardRef(({ image }, ref) => {
   const refAvatar = useRef(null)
   const [srcAvatar, setSrcAvatar] = useState('')
+
+  useEffect(() => {
+    setSrcAvatar(makeSrcFromBuffer(image))
+  }, [image])
 
   const onClick = useCallback((e: OnClick) => {
     e.preventDefault()
@@ -75,17 +91,19 @@ export const Avatar: FC<Props> = forwardRef((_, ref) => {
     if (!input.files || !input.files.length) return
     const file = input.files[0]
     const res = await imageService.upload(file, 'avatar')
-    console.log('res', res)
+    return res
   }, [])
 
   useImperativeHandle(ref, () => ({
     save
   }), [save])
 
+  console.log('image', image)
+
   return (
     <Container>
       {srcAvatar && <AvatarImg src={srcAvatar} alt='Аватар'/>}
-      {!srcAvatar && <AvatarPlug>Фото</AvatarPlug>}
+      {!srcAvatar && <AvatarPlug>Изображение</AvatarPlug>}
       <Button onClick={onClick} >Выбрать изображение</Button>
       <input
         type='file'

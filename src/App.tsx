@@ -10,13 +10,6 @@ import { useEffect } from 'react'
 import { Layout } from './components/Layout'
 import { BrowserRouter } from 'react-router-dom'
 
-// const Wrapper = styled.div`
-//   width: 100%;
-//   min-height: 100vh;
-//   padding: 2rem;
-//   background: white;
-// `
-
 const Global = createGlobalStyle`
 * {
   margin: 0;

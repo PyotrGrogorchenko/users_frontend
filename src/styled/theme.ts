@@ -1,7 +1,7 @@
 const palette = {
   primary: '#333333',
   secondary: '#ffffff',
-  tertiary: 'rgb(107 107 107)',
+  tertiary: '#999999',
   common: '#FF9011',
   shadow: '#e6e6e6',
   error: '#ed4b48',

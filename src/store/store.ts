@@ -1,15 +1,17 @@
-import { userService } from '../services/userService'
 import axios, { AxiosResponse } from 'axios'
 import { makeAutoObservable } from 'mobx'
-import { StoreError, TypeError } from '../exceptions/StoreError'
-import { API_URL } from '../http'
-import { AuthResponse } from '../models/responses/AuthResponse'
-import { User, UserLogin, UserRegistration } from '../models/User'
-import { authService } from '../services/authService'
+import { userService } from '@src/services/userService'
+import { StoreError, TypeError } from '@src/exceptions/StoreError'
+import { API_URL } from '@src/http'
+import { AuthResponse } from '@src/models/responses/AuthResponse'
+import { User, UserLogin, UserRegistration } from '@src/models/User'
+import { authService } from '@src/services/authService'
 import { imageService } from '@src/services/imageServiсe'
+import { Image } from '@src/models/Image'
 
 export class Store {
   user = <User>{}
+  avatar?: Image = undefined
   isAuth = false
   isLoading = false
   errors: { err: StoreError, type: TypeError} [] = []
@@ -24,6 +26,10 @@ export class Store {
 
   setUser(user: User) {
     this.user = user
+  }
+
+  setAvatar(avatar?: Image) {
+    this.avatar = avatar
   }
 
   setLoading(isLoading: boolean) {
@@ -72,6 +78,7 @@ export class Store {
       localStorage.removeItem('token')
       this.setAuth(false)
       this.setUser(<User>{})
+      this.setAvatar(undefined)
     } catch (e) {
       this.setError(new StoreError(e as Error), 'error')
     }
@@ -83,9 +90,9 @@ export class Store {
       localStorage.setItem('token', res.data.accessToken)
       this.setAuth(true)
       this.setUser(res.data.user)
-      if (res.data.user.avatar) {
-        const res = await imageService.download()
-        console.log('needs avatar', res)
+      if (res.data.user.avatarId) {
+        const resAvatar = await imageService.download(res.data.user.avatarId)
+        this.setAvatar(resAvatar.data.image)
       }
     } catch (e) {
       this.setError(new StoreError(e as Error), 'error')

@@ -34,6 +34,7 @@
         "object-curly-spacing": ["error", "always", { "arraysInObjects": false, "objectsInObjects": false }],
         "max-len": ["error", { "code": 150 }],
         "require-jsdoc": "off",
-        "import/no-unresolved": "off"
+        "import/no-unresolved": "off",
+        "react/prop-types": "off"
     }
 }

@@ -5,7 +5,7 @@ export type User = {
   password: string
   dateBirth?: string
   gender?: 'male' | 'female'
-  avatar?: File
+  avatarId?: string
 }
 
 export type UserLogin = Pick<User, 'email' | 'password'>

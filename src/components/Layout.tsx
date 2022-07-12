@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react'
 import styled from 'styled-components'
-import { Button } from './UI/Button'
 import { Link } from './UI/Link'
 
 export type Props = {
@@ -46,10 +45,8 @@ const LayoutFC: FC<Props> = ({ children }) => {
           <Link to='people'>Пользователи</Link>
         </Cell>
         <Cell justifyContent='center'>
-          <Button>Test</Button>
         </Cell>
         <Cell justifyContent='flex-end'>
-          <Button>Test</Button>
         </Cell>
 
       </Grid>
