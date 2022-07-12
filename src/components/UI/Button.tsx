@@ -25,5 +25,3 @@ export const Button: FC<Props> = (props) => {
     <StyledButton {...props}/>
   )
 }
-
-// export { Button }
